@@ -51,14 +51,15 @@ while true; do
 	case ${answer^^} in
 	    Y)
 			nextcloud.occ config:system:set trusted_domains 3 --value=$domain
-			nextcloud.enable-https lets-encrypt
-			nextcloud.enable-https lets-encrypt			
+			nextcloud.enable-https lets-encrypt	
 			echo "You should be good to-go".
+			echo "If enabling lets-encrypt failed, manually execute the following:"
+			echo "nextcloud.enable-https lets-encrypt"
 			break
 			;;
 		
 	    N)
-	    	echo "You should be good to-go now"
+	    	echo "End of script"
 	    	break
 	    	;;
 	    
