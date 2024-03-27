@@ -25,9 +25,9 @@ else
 
     # Copy ssh ckeys and set perms on it
     mkdir /home/$username/.ssh
-    cp .ssh/authorized_keys /home/$username/.ssh/authorized_keys
+    cp /root/.ssh/authorized_keys /home/$username/.ssh/authorized_keys
     chown -R $username:$username /home/$username/.ssh
-    echo "ssh keys copied to /home/$USERNAME/.ssh/authorized_keys"
+    echo "ssh keys copied to /home/$username/.ssh/authorized_keys"
     usermod -aG sudo $username
 	
 fi
