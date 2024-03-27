@@ -36,28 +36,25 @@ read -p "Set your nextcloud admin username: " ncuser
 read -p "Set your nextcloud admin password: " ncpass
 read -p "Enter your nextcloud server's IP address: " ip
 
-#su $username << EOF
-echo $password | su $username -c "sudo -S ufw allow http"
-echo $password | su $username -c "sudo -S ufw allow https"
+ufw allow http
+ufw allow https
+
 echo $password | su $username -c "sudo -S snap install nextcloud"
 echo $password | su $username -c "sudo -S nextcloud.manual-install $ncuser $ncpass"
 
 echo $password | su $username -c "sudo -S nextcloud.enable-https self-signed"
 echo $password | su $username -c "sudo -S nextcloud.occ config:system:set trusted_domains 2 --value=$ip"
-#EOF
 
 while true; do
 	read -p "Do you have a registered domain? (Y/N): " answer
 	case ${answer^^} in
 	    Y)
-		#su $username << EOF
-		echo $password | su $username -c "sudo -S nextcloud.enable-https lets-encrypt"
-		echo $password | su $username -c "sudo -S nextcloud.enable-https lets-encrypt"
-		echo $password | su $username -c "sudo -S nextcloud.occ config:system:set trusted_domains 3 --value=$domain"
-		#EOF
-		echo "You should be good to-go".
-		break
-		;;
+			nextcloud.enable-https lets-encrypt
+			nextcloud.enable-https lets-encrypt
+			nextcloud.occ config:system:set trusted_domains 3 --value=$domain			
+			echo "You should be good to-go".
+			break
+			;;
 		
 	    N)
 	    	echo "You should be good to-go now"
