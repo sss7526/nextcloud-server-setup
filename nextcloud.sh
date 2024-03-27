@@ -47,11 +47,12 @@ echo $password | su $username -c "sudo -S nextcloud.occ config:system:set truste
 
 while true; do
 	read -p "Do you have a registered domain? (Y/N): " answer
+	read -p "Then enter your domain: " domain
 	case ${answer^^} in
 	    Y)
+			nextcloud.occ config:system:set trusted_domains 3 --value=$domain
 			nextcloud.enable-https lets-encrypt
-			nextcloud.enable-https lets-encrypt
-			nextcloud.occ config:system:set trusted_domains 3 --value=$domain			
+			nextcloud.enable-https lets-encrypt			
 			echo "You should be good to-go".
 			break
 			;;
