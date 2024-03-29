@@ -44,8 +44,8 @@ ufw allow https
 echo $password | su $username -c "sudo -S snap install nextcloud"
 echo $password | su $username -c "sudo -S nextcloud.manual-install $ncuser $ncpass"
 
-#echo $password | su $username -c "sudo -S nextcloud.enable-https self-signed"
-#echo $password | su $username -c "sudo -S nextcloud.occ config:system:set trusted_domains 2 --value=$ip"
+echo $password | su $username -c "sudo -S nextcloud.enable-https self-signed"
+echo $password | su $username -c "sudo -S nextcloud.occ config:system:set trusted_domains 2 --value=$ip"
 
 while true; do
 	read -p "Do you have a registered domain? (Y/N): " answer
