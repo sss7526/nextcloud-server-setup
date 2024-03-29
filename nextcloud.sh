@@ -10,6 +10,8 @@ if [ "$(id -u)" -ne 0 ]; then
 fi
 
 apt -y update && apt -y upgrade
+apt install qrencode
+
 
 # Checking if user already exists
 if id "$username" &>/dev/null; then
@@ -42,15 +44,15 @@ ufw allow https
 echo $password | su $username -c "sudo -S snap install nextcloud"
 echo $password | su $username -c "sudo -S nextcloud.manual-install $ncuser $ncpass"
 
-echo $password | su $username -c "sudo -S nextcloud.enable-https self-signed"
-echo $password | su $username -c "sudo -S nextcloud.occ config:system:set trusted_domains 2 --value=$ip"
+#echo $password | su $username -c "sudo -S nextcloud.enable-https self-signed"
+#echo $password | su $username -c "sudo -S nextcloud.occ config:system:set trusted_domains 2 --value=$ip"
 
 while true; do
 	read -p "Do you have a registered domain? (Y/N): " answer
-	read -p "Then enter your domain: " domain
 	case ${answer^^} in
 	    Y)
-			nextcloud.occ config:system:set trusted_domains 3 --value=$domain
+			read -p "Then enter your domain: " domain
+			nextcloud.occ config:system:set trusted_domains 2 --value=$domain
 			nextcloud.enable-https lets-encrypt	
 			echo "You should be good to-go".
 			echo "If enabling lets-encrypt failed, manually execute the following:"
@@ -68,4 +70,4 @@ while true; do
 	    	;;
     	esac
 done
-    
+
